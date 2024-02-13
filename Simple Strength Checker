@@ -1,0 +1,109 @@
+import string
+import getpass
+
+def check_pwd():
+    #using getpass makes it so the password isnt visible on the screen
+    password = getpass.getpass("Enter Password: ")
+    strength = 0
+    #will use remarks to inform user about the strength og their password
+    remarks = ''
+    #what we will be checking for within our password
+    lower_count = upper_count = num_count = wspace_count = special_count = 0
+
+    for char in list(password):
+        # checks for lowercase with a predefined string containing all ASCII lowercase letters:'abcdefghijklmnopqrstuvwxyz'.
+        if char in string.ascii_lowercase:
+            lower_count +=1
+        #checks for uppercase in library 
+        elif char in string.ascii_uppercase:
+            upper_count +=1
+        #checks for number within password
+        elif char in string.digits:
+            num_count += 1
+        #checks for whitespace
+        elif char == ' ':
+            wspace_count += 1
+        #if doesnt fit any other rule special charater
+        else:
+            special_count += 1
+        
+
+
+#check strength of password and if it has all these things strength will be increased by 1 each time
+
+    if lower_count >= 1:
+        strength += 1
+    if upper_count >= 1:
+        strength += 1
+    if num_count >= 1:
+        strength += 1
+    if  wspace_count >= 1:
+        strength += 1
+    if special_count >= 1:
+        strength += 1
+
+
+#check what strength is equal too  to see how strong the password truly is
+
+    # if = to 1 means only one of these rules is met which means the password is weak 
+    if strength == 1:
+        remarks = "Your password is very weak! Please change it :("
+    elif strength == 2:
+        remarks = "Not a good password! Very weak! Please change it :("
+    elif strength == 3:
+        remarks = "Password is weak, consider changing it for something stronger !"
+    elif strength == 4:
+        remarks = "Okay password, could be better, make it stronger !"
+    elif strength == 5:
+        remarks = "Password is kind of strong but could be better !"
+    elif strength == 6:
+        remarks = "Password is strong but has room for improvment !"
+    elif strength == 7:
+        remarks = "Password is almost very strong just needs some changes :)"
+    elif strength >= 8:
+        remarks = "Your password is very strong great job :)"
+    print("Your password has: ")
+    #f string means we can swap with other variables
+    print(f"{lower_count} lowercase characters")
+    print(f"{upper_count} uppercase characters")
+    print(f"{num_count} numeric characters")
+    print(f"{wspace_count} whitespace characters")
+    print(f"{special_count} special characters")
+
+   #telling them strength of password and how to improve
+    print(f"Password Strength: {strength} ")
+    print(f"Hint: {remarks}")
+
+
+    #want to check multiple times and rewrite
+    def ask_pwd(another_pwd = False):
+        valid = False
+        # asks if user wants to enter another password or change the strength of their password
+        if another_pwd:
+            choice = input (" Do you want to enter another password (y/n): " )
+        else:
+            choice = input(" Do you want to check password? ")
+        while not valid:
+            if choice.lower() == 'y':
+                return True
+            elif choice.lower() == 'n':
+                return False
+            else:
+                print("Invalid entry, Try Again :) ")
+
+     #checks if imported by module or run by terminal
+    if __name__ == '__main__':
+        print("+++ Welcome to Password Checker +++ ")
+        ask_pwd = ask_pwd()
+        while check_pwd:
+            check_pwd()
+            ask_pwd = ask_pwd(True)
+
+#what this does is we check the password and print what we want and checks again within loop
+                
+
+
+
+
+    
+    
